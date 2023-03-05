@@ -3,20 +3,31 @@
 from sys import argv
 import random
 
+dr=None
+
+class DirectionError(Exception):
+    pass
+
+print(argv)
+
 if len(argv) < 2:
     raise BufferError('Not enought argument')
 elif not argv[1].endswith('.esol'):
     raise BufferError('Not an ESOL file')
+elif len(argv) == 3:
+    if not argv[2].lower() in ['right','left','up','down']:
+        raise DirectionError('Not a valid direction')
+    else:
+        dr=argv[2].lower()
 
 y=0
 x=0
 drs=[
-'k',
-'l',
-'j',
-'h'
+'up',
+'right',
+'down',
+'left'
 ]
-dr = random.choice(drs)
 
 cell=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 i=0
@@ -39,46 +50,52 @@ with open(argv[1]) as rf:
             pass
     x=f[y].index('S')
     while True:
+        print(dr)
+        print(f[y][x])
+        if cell[i] < 0:
+            cell[i] = 0
         if f[y][x] == '>':
             if i > len(cell)-1:
                 i = 0
             else:
                 i+=1
-            dr='l'
+            dr='right'
         elif f[y][x] == '<':
             if i < 0:
                 i=len(cell)-1
             else:
                 i=i-1
-            dr='h'
+            dr='left'
         elif f[y][x] == '^':
             cell[i]+=1
-            dr='k'
+            dr='up'
         elif f[y][x] == 'v':
             cell[i]=cell[i]-1
-            dr='j'
+            dr='down'
         elif f[y][x] == 'E':
             break
-        if dr == 'l':
+        if dr == 'right':
             if (x+1) > (len(f[y])-1):
                 raise PointerError('Pointer Cannot Continue')
             else:
                 x=x+1
-        elif dr == 'h':
+        elif dr == 'left':
             if (x-1) < 0:
                 raise PointerError('Pointer Cannot Continue')
             else:
                 x=x-1
-        elif dr == 'k':
+        elif dr == 'up':
             if (y-1) < 0:
-                raise PointerError('End of line')
+                raise PointerError('Pointer Cannot Continue')
             else:
                 y=y-1
-        elif dr == 'j':
+        elif dr == 'down':
             if (y+1) > (len(f)-1):
-                raise PointerError('End of line')
+                raise PointerError('Pointer Cannot Continue')
             else:
                 y=y+1
+        elif dr == None:
+            dr = random.choice(drs)
 
 for c in cell:
     if c == 0:
@@ -87,4 +104,4 @@ for c in cell:
         if outt == True:
             print(chr(c),end='')
         else:
-            print(cell.index(c),':',c)
+            print('{0:2}:{1:3}'.format(cell.index(c),c))

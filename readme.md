@@ -7,3 +7,6 @@ EsoLang is an ESOteric Language written in Python.
 `<` go left<br>
 `^` go up<br>
 `v` go down<br>
+# Usage
+`python3 esol.py <file.esol> (direction)`<br>
+directions: `up`,`right`,`down`,`left`
