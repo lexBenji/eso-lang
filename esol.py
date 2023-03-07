@@ -6,9 +6,9 @@ import random
 dr=None
 
 class DirectionError(Exception):
-    pass
-
-print(argv)
+    def __init__(self,error,code=420):
+        print('Error code {0}: {1}'.format(code,error))
+        raise SystemExit
 
 if len(argv) < 2:
     raise BufferError('Not enought argument')
@@ -16,7 +16,7 @@ elif not argv[1].endswith('.esol'):
     raise BufferError('Not an ESOL file')
 elif len(argv) == 3:
     if not argv[2].lower() in ['right','left','up','down']:
-        raise DirectionError('Not a valid direction')
+        raise DirectionError('Not a valid direction',202)
     else:
         dr=argv[2].lower()
 
@@ -34,7 +34,8 @@ i=0
 outt=False
 
 class PointerError(Exception):
-    pass
+    def __init__(self,error,code=329):
+        print('Error code {0}: {1}'.format(code,error))
 
 with open(argv[1]) as rf:
     rf=rf.readlines()
@@ -50,8 +51,6 @@ with open(argv[1]) as rf:
             pass
     x=f[y].index('S')
     while True:
-        print(dr)
-        print(f[y][x])
         if cell[i] < 0:
             cell[i] = 0
         if f[y][x] == '>':
@@ -81,17 +80,17 @@ with open(argv[1]) as rf:
                 x=x+1
         elif dr == 'left':
             if (x-1) < 0:
-                raise PointerError('Pointer Cannot Continue')
+                raise PointerError('Pointer Cannot Continue',330)
             else:
                 x=x-1
         elif dr == 'up':
             if (y-1) < 0:
-                raise PointerError('Pointer Cannot Continue')
+                raise PointerError('Pointer Cannot Continue',331)
             else:
                 y=y-1
         elif dr == 'down':
             if (y+1) > (len(f)-1):
-                raise PointerError('Pointer Cannot Continue')
+                raise PointerError('Pointer Cannot Continue',332)
             else:
                 y=y+1
         elif dr == None:
