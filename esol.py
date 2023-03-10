@@ -39,17 +39,17 @@ class PointerError(Exception):
 
 with open(argv[1]) as rf:
     rf=rf.readlines()
-    if rf[0] == '@text\n':
+    if '@text' in rf[0]:
         outt=True
     else:
         outt=False
     f=[list(x) for x in rf]
     for j in f:
-        if '(' in j:
+        if '$' in j:
             y = f.index(j)
         else:
             pass
-    x=f[y].index('(')
+    x=f[y].index('$')
     while True:
         print(y,x)
         print(f[y][x])
@@ -115,7 +115,7 @@ with open(argv[1]) as rf:
                         dr='left'
                     elif dr=='down':
                         dr='right'
-        elif f[y][x] == ')':
+        elif f[y][x] == '#':
             break
         if dr == 'right':
             if (x+1) > (len(f[y])-1):
