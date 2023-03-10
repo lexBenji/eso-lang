@@ -45,12 +45,14 @@ with open(argv[1]) as rf:
         outt=False
     f=[list(x) for x in rf]
     for j in f:
-        if 'S' in j:
+        if '(' in j:
             y = f.index(j)
         else:
             pass
-    x=f[y].index('S')
+    x=f[y].index('(')
     while True:
+        print(y,x)
+        print(f[y][x])
         if cell[i] < 0:
             cell[i] = 0
         if f[y][x] == '>':
@@ -71,7 +73,49 @@ with open(argv[1]) as rf:
         elif f[y][x] == 'v':
             cell[i]=cell[i]-1
             dr='down'
-        elif f[y][x] == 'E':
+        elif f[y][x] == '/':
+            if i+1 > len(cell)-1:
+                if cell[i] == cell[0]:
+                    if dr == 'left':
+                        dr = 'up'
+                    elif dr == 'right':
+                        dr='down'
+                    elif dr=='up':
+                        dr='right'
+                    elif dr=='down':
+                        dr='left'
+            else:
+                if cell[i] == cell[i+1]:
+                    if dr == 'left':
+                        dr = 'up'
+                    elif dr == 'right':
+                        dr='down'
+                    elif dr=='up':
+                        dr='right'
+                    elif dr=='down':
+                        dr='left'
+        elif f[y][x] == '\\':
+            if i-1 < 0:
+                if cell[i] == cell[len(cell)-1]:
+                    if dr == 'left':
+                        dr = 'down'
+                    elif dr == 'right':
+                        dr='up'
+                    elif dr=='up':
+                        dr='left'
+                    elif dr=='down':
+                        dr='right'
+            else:
+                if cell[i] == cell[i-1]:
+                    if dr == 'left':
+                        dr = 'down'
+                    elif dr == 'right':
+                        dr='up'
+                    elif dr=='up':
+                        dr='left'
+                    elif dr=='down':
+                        dr='right'
+        elif f[y][x] == ')':
             break
         if dr == 'right':
             if (x+1) > (len(f[y])-1):
