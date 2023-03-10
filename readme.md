@@ -9,8 +9,7 @@ EsoLang is an ESOteric Language written in Python.
 `v` go down<br>
 `/` check next cell<br>
 `\` check previous cell<br>
-:x
-:x
+`@text` turns on \`print' mode<br>
 # Usage
 `python3 esol.py <file.esol> (direction)`<br>
 directions: `up`,`right`,`down`,`left`
