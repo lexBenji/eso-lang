@@ -51,8 +51,6 @@ with open(argv[1]) as rf:
             pass
     x=f[y].index('$')
     while True:
-        print(y,x)
-        print(f[y][x])
         if cell[i] < 0:
             cell[i] = 0
         if f[y][x] == '>':
